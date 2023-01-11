@@ -2,8 +2,6 @@ package com.android.customization.model.color
 
 import android.annotation.ColorInt
 import android.app.WallpaperColors
-import android.content.Context
-import android.provider.Settings
 import android.util.SparseIntArray
 
 import dev.kdrag0n.colorkt.Color
@@ -38,13 +36,11 @@ class WallpaperColorResources {
         cond = cond,
     )
 
-    constructor(wallpaperColors: WallpaperColors, context: Context) {
+    constructor(wallpaperColors: WallpaperColors) {
         // Generate color scheme
-        val color_override = Settings.Secure.getInt(context.contentResolver, "monet_engine_color_override", -1)
-        val seed_color = if (color_override != -1) color_override else wallpaperColors.primaryColor.toArgb()
         val colorScheme = DynamicColorScheme(
             targets = targets,
-            seedColor = Srgb(seed_color),
+            seedColor = Srgb(wallpaperColors.primaryColor.toArgb()),
             chromaFactor = 1.0,
             cond = cond,
             accurateShades = true,
